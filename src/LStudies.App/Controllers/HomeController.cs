@@ -1,4 +1,4 @@
-﻿using LStudies.App.Models;
+﻿using LStudies.App.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

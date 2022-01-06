@@ -33,6 +33,8 @@ namespace LStudies.App
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllersWithViews();
 
             services.AddScoped<LStudiesDbContext>();

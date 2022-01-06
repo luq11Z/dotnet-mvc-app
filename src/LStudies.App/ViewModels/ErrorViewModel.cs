@@ -1,6 +1,6 @@
 using System;
 
-namespace LStudies.App.Models
+namespace LStudies.App.ViewModels
 {
     public class ErrorViewModel
     {
