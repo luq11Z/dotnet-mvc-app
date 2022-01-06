@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -31,6 +32,12 @@ namespace LStudies.App.ViewModels
         [DisplayName("Active?")]
         public bool IsActive { get; set; }
 
+        [Required(ErrorMessage = "{0} is required")]
+        [DisplayName("Provider")]
+        public Guid ProviderId { get; set; }
+
         public ProviderViewModel Provider { get; set; }
+
+        public IEnumerable<ProviderViewModel> Providers { get; set; }
     }
 }

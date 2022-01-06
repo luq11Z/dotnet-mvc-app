@@ -35,7 +35,7 @@ namespace LStudies.App
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddScoped<LStudiesDbContext>();
             services.AddScoped<IProductRepository, ProductRepository>();
