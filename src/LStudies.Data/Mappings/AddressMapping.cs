@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 /* EF FluentAPI configuration */
 namespace LStudies.Data.Mappings
 {
-    public class AdressMapping : IEntityTypeConfiguration<Adress>
+    public class AddressMapping : IEntityTypeConfiguration<Address>
     {
-        public void Configure(EntityTypeBuilder<Adress> builder)
+        public void Configure(EntityTypeBuilder<Address> builder)
         {
             builder.HasKey(a => a.Id);
 
@@ -39,7 +39,7 @@ namespace LStudies.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(50)");
 
-            builder.ToTable("Adresses");
+            builder.ToTable("Addresses");
         }
     }
 }

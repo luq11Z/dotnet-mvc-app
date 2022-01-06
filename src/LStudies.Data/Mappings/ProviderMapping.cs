@@ -20,7 +20,7 @@ namespace LStudies.Data.Mappings
                .HasColumnType("varchar(14)");
 
             // 1 : 1 => Provider : Address (provider has one address)
-            builder.HasOne(p => p.Adress)
+            builder.HasOne(p => p.Address)
                 .WithOne(a => a.Provider);
 
             // 1 : N => Provider : Products (provider has N products)

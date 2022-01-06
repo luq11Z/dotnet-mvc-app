@@ -2,7 +2,7 @@
 
 namespace LStudies.Business.Models
 {
-    public class Adress : Entity 
+    public class Address : Entity 
     {
         public Guid ProviderId { get; set; }
 

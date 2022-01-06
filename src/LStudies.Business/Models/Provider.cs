@@ -10,7 +10,7 @@ namespace LStudies.Business.Models
 
         public ProviderType ProviderType { get; set; }
 
-        public Adress Adress { get; set; }
+        public Address Address { get; set; }
 
         public bool IsActive { get; set; }
 

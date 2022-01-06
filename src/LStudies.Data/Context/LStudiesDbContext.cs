@@ -1,5 +1,6 @@
 ﻿using LStudies.Business.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 /* EF DbContext configuration*/
@@ -12,9 +13,14 @@ namespace LStudies.Data.Context
             
         }
 
-        public DbSet<Adress> Adresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Provider> Providers { get; set; }
+
+        internal Address AsNoTracking()
+        {
+            throw new NotImplementedException();
+        }
 
         /* This method is called when the models are created. Here we can pass our own configurations context*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
