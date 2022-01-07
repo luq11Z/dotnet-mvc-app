@@ -1,46 +1,52 @@
 ﻿@model LStudies.App.ViewModels.ProviderViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "New Provider";
 }
 
-<h1>Create</h1>
-
-<h4>ProviderViewModel</h4>
+<h3 style="padding-top: 50px">@ViewData["Title"]</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Document" class="control-label"></label>
                 <input asp-for="Document" class="form-control" />
                 <span asp-validation-for="Document" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="ProviderType" class="control-label"></label>
-                <input asp-for="ProviderType" class="form-control" />
-                <span asp-validation-for="ProviderType" class="text-danger"></span>
+                <label asp-for="ProviderType" class="control-label"></label><br />
+                <input type="radio" value="1" asp-for="ProviderType" checked /> Private Individual<br />
+                <input type="radio" value="2" asp-for="ProviderType" /> Legal Entity
             </div>
+
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
                 </label>
             </div>
+
+            <h4>Address</h4>
+            <hr />
+
+            <partial name="_Address" />
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Resgiter" class="btn btn-primary" />
+                <a class="btn btn-info" asp-action="Index">Back</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

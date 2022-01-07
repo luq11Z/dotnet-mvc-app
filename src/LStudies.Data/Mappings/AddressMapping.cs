@@ -24,7 +24,6 @@ namespace LStudies.Data.Mappings
                 .HasColumnType("varchar(8)");
 
             builder.Property(a => a.Complement)
-                .IsRequired()
                 .HasColumnType("varchar(250)");
 
             builder.Property(a => a.District)

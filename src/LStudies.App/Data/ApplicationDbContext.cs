@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using LStudies.App.ViewModels;
 
 namespace LStudies.App.Data
 {
@@ -13,6 +9,5 @@ namespace LStudies.App.Data
             : base(options)
         {
         }
-        public DbSet<LStudies.App.ViewModels.ProductViewModel> ProductViewModel { get; set; }
     }
 }

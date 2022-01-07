@@ -12,7 +12,7 @@ namespace LStudies.App.ViewModels
 
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(200, ErrorMessage = "{0} must have between {2} and {1} characters", MinimumLength = 2)]
-        [DisplayName("Public place")]
+        [DisplayName("Public Place")]
         public string PublicPlace { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
@@ -23,11 +23,11 @@ namespace LStudies.App.ViewModels
 
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(8, ErrorMessage = "{0} must have {1}", MinimumLength = 8)]
+        [DisplayName("Postal Code")]
         public string PostalCode { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(100, ErrorMessage = "{0} must have between {2} and {1} characters", MinimumLength = 2)]
-        [DisplayName("Postal code")]
         public string District { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]

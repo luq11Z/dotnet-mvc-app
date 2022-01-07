@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LStudies.App", "src\LStudies.App\LStudies.App.csproj", "{1F408C33-C582-4E3E-B296-9B7347B5A5E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LStudies.App", "src\LStudies.App\LStudies.App.csproj", "{1F408C33-C582-4E3E-B296-9B7347B5A5E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LStudies.Business", "src\LStudies.Business\LStudies.Business.csproj", "{2FD45D5E-D251-4A60-B18B-F9AF843A8C70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LStudies.Business", "src\LStudies.Business\LStudies.Business.csproj", "{2FD45D5E-D251-4A60-B18B-F9AF843A8C70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LStudies.Data", "src\LStudies.Data\LStudies.Data.csproj", "{C8DDF96C-DCF9-41BF-8B5B-ED12D7DE9E84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LStudies.Data", "src\LStudies.Data\LStudies.Data.csproj", "{C8DDF96C-DCF9-41BF-8B5B-ED12D7DE9E84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
