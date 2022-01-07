@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LStudies.App.Extensions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,7 @@ namespace LStudies.App.ViewModels
         public string Image { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
+        [Currency]
         public decimal Price { get; set; }
 
         [ScaffoldColumn(false)] //disable inputing
