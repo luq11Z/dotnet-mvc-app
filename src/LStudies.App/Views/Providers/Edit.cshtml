@@ -1,13 +1,12 @@
 ﻿@model LStudies.App.ViewModels.ProviderViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit " + Model.Name;
 }
 
-<h1>Edit</h1>
-
-<h4>ProviderViewModel</h4>
+<h3 style="padding-top: 30px">@ViewData["Title"]</h3>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">

@@ -61,7 +61,7 @@ namespace LStudies.App.Controllers
 
             var imgPrefix = Guid.NewGuid() + "_";
 
-            if(!await UploadImage(productViewModel.ImageUpload, imgPrefix))
+            if (!await UploadImage(productViewModel.ImageUpload, imgPrefix))
             {
                 return View(productViewModel);
             }
@@ -93,13 +93,32 @@ namespace LStudies.App.Controllers
                 return NotFound();
             }
 
+            var productViewModelUpdate = await GetProduct(id);
+            productViewModel.Provider = productViewModelUpdate.Provider;
+            productViewModel.Image = productViewModelUpdate.Image;
+
             if (!ModelState.IsValid)
             {
                 return View(productViewModel);
-                
             }
 
-            await _productRepository.Update(_mapper.Map<Product>(productViewModel));
+            if (productViewModel.ImageUpload != null)
+            {
+                var imgPrefix = Guid.NewGuid() + "_";
+                if (!await UploadImage(productViewModel.ImageUpload, imgPrefix))
+                {
+                    return View(productViewModel);
+                }
+
+                productViewModelUpdate.Image = imgPrefix + productViewModel.ImageUpload.FileName;
+            }
+
+            productViewModelUpdate.Name = productViewModel.Name;
+            productViewModelUpdate.Description = productViewModel.Description;
+            productViewModelUpdate.Price = productViewModel.Price;
+            productViewModelUpdate.IsActive = productViewModel.IsActive;
+
+            await _productRepository.Update(_mapper.Map<Product>(productViewModelUpdate));
            
             return RedirectToAction("Index");
         }
@@ -122,7 +141,7 @@ namespace LStudies.App.Controllers
         {
             var prodcutViewModel = await GetProduct(id);
 
-            if(prodcutViewModel == null)
+            if (prodcutViewModel == null)
             {
                 return NotFound();
             }

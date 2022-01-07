@@ -10,7 +10,8 @@ namespace LStudies.Data.Context
     {
         public LStudiesDbContext(DbContextOptions options) : base(options)
         {
-            
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Address> Addresses { get; set; }
