@@ -6,6 +6,8 @@ using LStudies.App.ViewModels;
 using LStudies.Business.Interfaces;
 using AutoMapper;
 using LStudies.Business.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace LStudies.App.Controllers
 {
@@ -57,6 +59,14 @@ namespace LStudies.App.Controllers
                 return View(productViewModel);
             }
 
+            var imgPrefix = Guid.NewGuid() + "_";
+
+            if(!await UploadImage(productViewModel.ImageUpload, imgPrefix))
+            {
+                return View(productViewModel);
+            }
+
+            productViewModel.Image = imgPrefix + productViewModel.ImageUpload.FileName;
             await _productRepository.Add(_mapper.Map<Product>(productViewModel));
 
             return RedirectToAction("Index");
@@ -135,6 +145,27 @@ namespace LStudies.App.Controllers
             product.Providers = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll());
 
             return product;
+        }
+
+        private async Task<bool> UploadImage(IFormFile file, string imgPrefix)
+        {
+            if (file.Length <= 0)
+            {
+                return false;
+            }
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imgPrefix + file.FileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, file.FileName + " already existis!");
+                return false;
+            }
+
+            var stream = new FileStream(path, FileMode.Create);
+            await file.CopyToAsync(stream);
+
+            return true;
         }
     }
 }
