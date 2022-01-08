@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<LStudies.App.ViewModels.ProductViewModel>
 
 @{
-    ViewData["Title"] = "Product's List";
+    ViewData["Title"] = "Products List";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -10,53 +10,5 @@
 <p>
     <a class="btn btn-info" asp-action="Create">New Product</a>
 </p>
-<table class="table table-hover">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Provider)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="~/images/@item.Image" alt="@item.Image" style="width: 80px; height: 100px"/>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Provider.Name)
-                </td>
-                <td>
-                    @item.Price.ToString("C")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash"></span></a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<partial name="_ProductList" />

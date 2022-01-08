@@ -36,6 +36,7 @@ namespace LStudies.App.ViewModels
 
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(50, ErrorMessage = "{0} must have between {2} and {1} characters", MinimumLength = 2)]
+        [DisplayName("Country")]
         public string State { get; set; }
 
         [HiddenInput]

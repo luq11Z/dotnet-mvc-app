@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit " + Model.Name;
 }
 
-<h3 style="padding-top: 30px">@ViewData["Title"]</h3>
+<h3 style="padding-top: 50px">@ViewData["Title"]</h3>
 <hr />
 
 <div class="row">
@@ -59,7 +59,7 @@
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <a class="btn btn-danger" asp-action="Index">Cancel</a>
+                <a class="btn btn-danger" href="javascript:window.history.back();">Cancel</a>
             </div>
         </form>
     </div>

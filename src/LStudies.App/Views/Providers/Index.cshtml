@@ -1,7 +1,8 @@
-﻿@model IEnumerable<LStudies.App.ViewModels.ProviderViewModel>
+﻿@using LStudies.App.Extensions
+@model IEnumerable<LStudies.App.ViewModels.ProviderViewModel>
 
 @{
-    ViewData["Title"] = "Provider's List";
+    ViewData["Title"] = "Providers List";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -33,7 +34,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Document)
+                    @this.FormatDocument(item.ProviderType, item.Document)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsActive)
