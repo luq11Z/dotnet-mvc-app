@@ -12,11 +12,13 @@ namespace LStudies.App.Controllers
     public class ProvidersController : BaseController
     {
         private readonly IProviderRepository _providerRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
 
-        public ProvidersController(IProviderRepository providerRepository, IMapper mapper)
+        public ProvidersController(IProviderRepository providerRepository, IAddressRepository addressRepository, IMapper mapper)
         {
             _providerRepository = providerRepository;
+            _addressRepository = addressRepository;
             _mapper = mapper;
         }
 
@@ -116,6 +118,51 @@ namespace LStudies.App.Controllers
             await _providerRepository.Delete(id);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> GetAddress(Guid id)
+        {
+            var providerViewModel = await GetProviderAddress(id);
+
+            if (providerViewModel == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("_AddressDetails", providerViewModel);
+        }
+
+        /* Instatiate entity by searching with it's id and return as a View Model (DTO) */
+        public async Task<IActionResult> UpdateAddress(Guid id)
+        {
+            var provider = await GetProviderAddress(id);
+
+            if(provider == null)
+            {
+                return NotFound();
+            }
+
+            /* Identify the partial view we want to render with entity data */
+            return PartialView("_UpdateAddress", new ProviderViewModel { Address = provider.Address });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateAddress(ProviderViewModel providerViewModel)
+        {
+            ModelState.Remove("Name");
+            ModelState.Remove("Document");
+
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_UpdateAddress", providerViewModel);
+            }
+
+            await _addressRepository.Update(_mapper.Map<Address>(providerViewModel.Address));
+
+            var url = Url.Action("GetAddress", "Providers", new { id = providerViewModel.Address.ProviderId });
+
+            return Json(new { success = true, url });
         }
 
         /* This method is called a few times within the controller, that's why it is created here*/
