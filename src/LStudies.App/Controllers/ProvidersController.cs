@@ -22,11 +22,13 @@ namespace LStudies.App.Controllers
             _mapper = mapper;
         }
 
+        [Route("providers-list")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll()));
         }
 
+        [Route("provider-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var providerViewModel = await GetProviderAddress(id);
@@ -39,11 +41,13 @@ namespace LStudies.App.Controllers
             return View(providerViewModel);
         }
 
+        [Route("new-provider")]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Route("new-provider")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProviderViewModel providerViewModel)
@@ -59,6 +63,7 @@ namespace LStudies.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("edit-provider/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var providerViewModel = await GetProviderProductsAddress(id);
@@ -71,6 +76,7 @@ namespace LStudies.App.Controllers
             return View(providerViewModel);
         }
 
+        [Route("edit-provider/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProviderViewModel providerViewModel)
@@ -92,6 +98,7 @@ namespace LStudies.App.Controllers
             
         }
 
+        [Route("delete-provider/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var providerViewModel = await GetProviderAddress(id);
@@ -104,6 +111,7 @@ namespace LStudies.App.Controllers
             return View(providerViewModel);
         }
 
+        [Route("delete-provider/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -120,6 +128,7 @@ namespace LStudies.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("get-provider-address/{id:guid}")]
         public async Task<IActionResult> GetAddress(Guid id)
         {
             var providerViewModel = await GetProviderAddress(id);
@@ -133,6 +142,7 @@ namespace LStudies.App.Controllers
         }
 
         /* Instatiate entity by searching with it's id and return as a View Model (DTO) */
+        [Route("update-provider-address/{id:guid}")]
         public async Task<IActionResult> UpdateAddress(Guid id)
         {
             var provider = await GetProviderAddress(id);
@@ -146,6 +156,7 @@ namespace LStudies.App.Controllers
             return PartialView("_UpdateAddress", new ProviderViewModel { Address = provider.Address });
         }
 
+        [Route("update-provider-address/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateAddress(ProviderViewModel providerViewModel)

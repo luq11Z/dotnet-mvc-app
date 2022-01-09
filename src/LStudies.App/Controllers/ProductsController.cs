@@ -24,11 +24,13 @@ namespace LStudies.App.Controllers
             _mapper = mapper;
         }
 
+        [Route("products-list")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsProviders()));
         }
 
+        [Route("product-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var productViewModel = await GetProduct(id);
@@ -41,6 +43,8 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [Route("new-product")]
+
         public async Task<IActionResult> Create()
         {
             var productViewModel = await PopulateProviders(new ProductViewModel());
@@ -48,6 +52,7 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [Route("new-product")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productViewModel)
@@ -72,6 +77,7 @@ namespace LStudies.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("edit-product/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var productViewModel = await GetProduct(id);
@@ -84,6 +90,7 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [Route("edit-product/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel productViewModel)
@@ -123,6 +130,7 @@ namespace LStudies.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("delete-product/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var productViewModel = await GetProduct(id);
@@ -135,6 +143,7 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [Route("delete-product/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
