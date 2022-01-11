@@ -8,9 +8,12 @@ using AutoMapper;
 using LStudies.Business.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
+using LStudies.App.Extensions;
 
 namespace LStudies.App.Controllers
 {
+    [Authorize]
     public class ProductsController : BaseController
     {
         private readonly IProductRepository _productRepository;
@@ -30,12 +33,14 @@ namespace LStudies.App.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [Route("products-list")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsProviders()));
         }
 
+        [AllowAnonymous]
         [Route("product-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -49,8 +54,8 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Products", "Create")]
         [Route("new-product")]
-
         public async Task<IActionResult> Create()
         {
             var productViewModel = await PopulateProviders(new ProductViewModel());
@@ -58,6 +63,7 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Products", "Create")]
         [Route("new-product")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,6 +94,7 @@ namespace LStudies.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [ClaimsAuthorize("Products", "Edit")]
         [Route("edit-product/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -101,6 +108,7 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Products", "Edit")]
         [Route("edit-product/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -146,6 +154,7 @@ namespace LStudies.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [ClaimsAuthorize("Products", "Delete")]
         [Route("delete-product/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -159,6 +168,7 @@ namespace LStudies.App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Products", "Delete")]
         [Route("delete-product/{id:guid}")]
         [HttpPost, ActionName("Delete")] // ActionName makes the method responds to Delete Action
         [ValidateAntiForgeryToken]
