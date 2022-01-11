@@ -59,7 +59,6 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Providers", "Create")]
         [Route("new-provider")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProviderViewModel providerViewModel)
         {
             if (!ModelState.IsValid)
@@ -95,7 +94,6 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Providers", "Edit")]
         [Route("edit-provider/{id:guid}")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProviderViewModel providerViewModel)
         {
             if (id != providerViewModel.Id)
@@ -139,7 +137,6 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Providers", "Delete")]
         [Route("delete-provider/{id:guid}")]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var providerViewModel = await GetProviderAddress(id);
@@ -193,7 +190,6 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Providers", "Edit")]
         [Route("update-provider-address/{id:guid}")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateAddress(ProviderViewModel providerViewModel)
         {
             ModelState.Remove("Name");

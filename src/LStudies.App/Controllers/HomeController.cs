@@ -1,11 +1,6 @@
 ﻿using LStudies.App.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LStudies.App.Controllers
 {
@@ -28,10 +23,35 @@ namespace LStudies.App.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("error/{id:length(3,3)}")]
+        public IActionResult Error(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var modelError = new ErrorViewModel();
+
+            if (id == 500)
+            {
+                modelError.Title = "An error has occurred!";
+                modelError.Message = "An error has occurred! Try again later or contact our support";
+                modelError.ErrorCode = id;
+            }
+            else if (id == 404)
+            {
+                modelError.Title = "Ops! Page not found.";
+                modelError.Message = "The page you are looking for doesn't exist!";
+                modelError.ErrorCode = id;
+            }
+            else if (id == 403)
+            {
+                modelError.Title = "Permission denied!";
+                modelError.Message = "You do not have permissios to do this action.";
+                modelError.ErrorCode = id;
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+
+            return View("Error", modelError);
         }
     }
 }

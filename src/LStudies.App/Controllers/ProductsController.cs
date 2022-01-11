@@ -66,7 +66,6 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Products", "Create")]
         [Route("new-product")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productViewModel)
         {
             productViewModel = await PopulateProviders(productViewModel);
@@ -111,7 +110,6 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Products", "Edit")]
         [Route("edit-product/{id:guid}")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel productViewModel)
         {
             if (id != productViewModel.Id)
@@ -171,12 +169,11 @@ namespace LStudies.App.Controllers
         [ClaimsAuthorize("Products", "Delete")]
         [Route("delete-product/{id:guid}")]
         [HttpPost, ActionName("Delete")] // ActionName makes the method responds to Delete Action
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var prodcutViewModel = await GetProduct(id);
+            var productViewModel = await GetProduct(id);
 
-            if (prodcutViewModel == null)
+            if (productViewModel == null)
             {
                 return NotFound();
             }
@@ -185,7 +182,7 @@ namespace LStudies.App.Controllers
 
             if (!IsOperationValid())
             {
-                return View(prodcutViewModel); // In case of failure the it will return the user to the Delete View (because of the ActionName("Delete"))
+                return View(productViewModel); // In case of failure the it will return the user to the Delete View (because of the ActionName("Delete"))
             }
 
             TempData["Success"] = "Product successfully deleted";
@@ -196,7 +193,11 @@ namespace LStudies.App.Controllers
         private async Task<ProductViewModel> GetProduct(Guid id)
         {
             var product = _mapper.Map<ProductViewModel>(await _productRepository.GetProductProvider(id));
-            product.Providers = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll());
+
+            if (product != null)
+            {
+                product.Providers = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll());
+            }
 
             return product;
         }

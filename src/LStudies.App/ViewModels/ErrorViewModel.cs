@@ -1,11 +1,9 @@
-using System;
-
 namespace LStudies.App.ViewModels
 {
     public class ErrorViewModel
     {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public int ErrorCode { get; set; }
     }
 }
