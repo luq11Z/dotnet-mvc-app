@@ -15,12 +15,18 @@ namespace LStudies.App.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly IProviderRepository _providerRepository;
+        private readonly IProductService _productService;
         private IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository, IProviderRepository providerRepository, IMapper mapper)
+        public ProductsController(IProductRepository productRepository, 
+                                  IProviderRepository providerRepository,
+                                  IProductService productService,
+                                  IMapper mapper,
+                                  INotifier notifier) : base(notifier)
         {
             _productRepository = productRepository;
             _providerRepository = providerRepository;
+            _productService = productService;
             _mapper = mapper;
         }
 
@@ -72,7 +78,12 @@ namespace LStudies.App.Controllers
             }
 
             productViewModel.Image = imgPrefix + productViewModel.ImageUpload.FileName;
-            await _productRepository.Add(_mapper.Map<Product>(productViewModel));
+            await _productService.Add(_mapper.Map<Product>(productViewModel));
+
+            if (!IsOperationValid())
+            {
+                return View(productViewModel);
+            }
 
             return RedirectToAction("Index");
         }
@@ -125,8 +136,13 @@ namespace LStudies.App.Controllers
             productViewModelUpdate.Price = productViewModel.Price;
             productViewModelUpdate.IsActive = productViewModel.IsActive;
 
-            await _productRepository.Update(_mapper.Map<Product>(productViewModelUpdate));
-           
+            await _productService.Update(_mapper.Map<Product>(productViewModelUpdate));
+
+            if (!IsOperationValid())
+            {
+                return View(productViewModel);
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -144,7 +160,7 @@ namespace LStudies.App.Controllers
         }
 
         [Route("delete-product/{id:guid}")]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Delete")] // ActionName makes the method responds to Delete Action
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
@@ -155,7 +171,14 @@ namespace LStudies.App.Controllers
                 return NotFound();
             }
 
-            await _productRepository.Delete(id);
+            await _productService.Delete(id);
+
+            if (!IsOperationValid())
+            {
+                return View(prodcutViewModel); // In case of failure the it will return the user to the Delete View (because of the ActionName("Delete"))
+            }
+
+            TempData["Success"] = "Product successfully deleted";
 
             return RedirectToAction("Index");
         }

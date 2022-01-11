@@ -1,5 +1,7 @@
 ﻿using LStudies.App.Extensions;
 using LStudies.Business.Interfaces;
+using LStudies.Business.Notifications;
+using LStudies.Business.Services;
 using LStudies.Data.Context;
 using LStudies.Data.Repositories;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
@@ -16,6 +18,10 @@ namespace LStudies.App.Configuration
             services.AddScoped<IProviderRepository, ProviderRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddSingleton<IValidationAttributeAdapterProvider, CurrencyAttributeAdapterProvider>();
+
+            services.AddScoped<INotifier, Notifier>();
+            services.AddScoped<IProviderService, ProviderService>();
+            services.AddScoped<IProductService, ProductService>();
 
             return services;
         }

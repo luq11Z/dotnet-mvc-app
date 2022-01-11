@@ -12,14 +12,17 @@ namespace LStudies.App.Controllers
     public class ProvidersController : BaseController
     {
         private readonly IProviderRepository _providerRepository;
-        private readonly IAddressRepository _addressRepository;
+        private readonly IProviderService _providerService;
         private readonly IMapper _mapper;
 
-        public ProvidersController(IProviderRepository providerRepository, IAddressRepository addressRepository, IMapper mapper)
+        public ProvidersController(IProviderRepository providerRepository, 
+                                   IMapper mapper,
+                                   IProviderService providerService,
+                                   INotifier notifier) : base(notifier)
         {
             _providerRepository = providerRepository;
-            _addressRepository = addressRepository;
             _mapper = mapper;
+            _providerService = providerService;
         }
 
         [Route("providers-list")]
@@ -58,7 +61,12 @@ namespace LStudies.App.Controllers
             }
 
             var provider = _mapper.Map<Provider>(providerViewModel);
-            await _providerRepository.Add(provider);
+            await _providerService.Add(provider);
+
+            if (!IsOperationValid())
+            {
+                return View(providerViewModel);
+            }
 
             return RedirectToAction("Index");
         }
@@ -92,7 +100,14 @@ namespace LStudies.App.Controllers
             }
 
             var provider = _mapper.Map<Provider>(providerViewModel);
-            await _providerRepository.Update(provider);
+            await _providerService.Update(provider);
+
+            if (!IsOperationValid())
+            {
+                providerViewModel = await GetProviderProductsAddress(id);
+
+                return View(providerViewModel);
+            }
 
             return RedirectToAction("Index");
             
@@ -123,7 +138,12 @@ namespace LStudies.App.Controllers
                 return NotFound();
             }
 
-            await _providerRepository.Delete(id);
+            await _providerService.Delete(id);
+
+            if (!IsOperationValid())
+            {
+                return View(providerViewModel);
+            }
 
             return RedirectToAction("Index");
         }
@@ -169,7 +189,12 @@ namespace LStudies.App.Controllers
                 return PartialView("_UpdateAddress", providerViewModel);
             }
 
-            await _addressRepository.Update(_mapper.Map<Address>(providerViewModel.Address));
+            await _providerService.UpdateAddress(_mapper.Map<Address>(providerViewModel.Address));
+
+            if (!IsOperationValid())
+            {
+                return View(providerViewModel);
+            }
 
             var url = Url.Action("GetAddress", "Providers", new { id = providerViewModel.Address.ProviderId });
 

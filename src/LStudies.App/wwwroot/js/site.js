@@ -108,5 +108,5 @@ function searchPostalCode() {
 } */
 
 $(document).ready(function () {
-    $("#msg_box").fadeOut(2500);
+    $("#msg_box").fadeOut(3500);
 });
