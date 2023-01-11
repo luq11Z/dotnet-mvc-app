@@ -11,6 +11,9 @@ In this app there are configurantions examples for:
 ###### Entity Framework
 ###### Identity
 ###### Error & Exception Handling
+###### Views & customazitions. PartialViews 
+###### ViewModels
+###### Custom validations & Annotations
 
 for ASP NET Core 3.5 or higher.
 
